@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+
+	<meta title="The Amazing Digital Circus" package="com.tadc.fangame" version="0.1.0" company="Brenninho" />
+	<app main="Main" path="export" file="TADCFangame" />
+
+	<window width="1280" height="720" background="#000000" fps="60" orientation="landscape" vsync="false" />
+
+	<source path="source" />
+
+	<haxelib name="flixel" />
+	<haxelib name="flixel-addons" />
+	<haxelib name="flixel-ui" />
+
+	<assets path="assets/images"  rename="images"  include="*.png;*.jpg;*.jpeg" />
+	<assets path="assets/sounds"  rename="sounds"  include="*.ogg;*.wav" />
+	<assets path="assets/music"   rename="music"   include="*.ogg;*.mp3" />
+	<assets path="assets/fonts"   rename="fonts"   include="*.ttf;*.otf" />
+	<assets path="assets/data"    rename="data"    include="*.json;*.xml;*.txt;*.csv" />
+
+	<!-- Debug flags -->
+	<haxedef name="FLX_NO_MOUSE_ADVANCED" if="desktop" />
+
+	<!-- Optimisations for release builds -->
+	<haxedef name="FLX_NO_DEBUG" unless="debug" />
+	<haxeflag name="-dce full" unless="debug" />
+
+	<!-- Desktop targets -->
+	<set name="BUILD_DIR" value="export" />
+
+</project>
