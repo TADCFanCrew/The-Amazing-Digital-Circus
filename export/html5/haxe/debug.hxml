@@ -1,0 +1,42 @@
+-main ApplicationMain 
+--macro keep('IntIterator')
+-cp C:/HaxeToolkit/haxe/lib/hscript/2,7,0
+-D hscript=2.7.0
+-cp C:/HaxeToolkit/haxe/lib/flixel-addons/4,0,1
+-D flixel-addons=4.0.1
+-cp C:/HaxeToolkit/haxe/lib/flixel/6,1,2
+-D flixel=6.1.2
+--macro lime._internal.macros.DefineMacro.run()
+--macro haxe.macro.Compiler.addMetadata("@:autoBuild(lime._internal.macros.AssetsMacro.embedBytes())", "haxe.io.Bytes")
+-cp C:/HaxeToolkit/haxe/lib/lime/8,3,2/src
+-D lime=8.3.2
+--macro openfl.utils._internal.ExtraParamsMacro.include()
+-cp C:/HaxeToolkit/haxe/lib/openfl/9,5,2/src
+-D openfl=9.5.2
+-cp C:/HaxeToolkit/haxe/lib/flixel-ui/2,6,4
+-D flixel-ui=2.6.4
+-cp source
+-D ANDROID_SETUP=true
+-D ANDROID_NDK_ROOT=C:\android-ndk-r21e
+-D howlerjs
+-D lime-webgl
+-D lime-dom
+-D lime-howlerjs
+-D lime-html5
+-D lime-threads
+-D tools=8.3.2
+-D ANDROID_SDK=C:\Users\Breno\AppData\Local\Android\Sdk
+-D lime-canvas
+-D FLX_NO_DEBUG
+-D no-compilation
+-D openfl-html5
+-D JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-17.0.16.8-hotspot
+-D html5
+-D web
+--remap flash:openfl
+--macro flixel.system.macros.FlxDefines.run()
+-dce full
+-js export/html5/bin/TADCFangame.js
+-cp export/html5/haxe
+-D html5
+-debug
