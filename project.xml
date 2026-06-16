@@ -12,12 +12,7 @@
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui" />
 
-	<assets path="assets/images"  rename="images"  include="*.png;*.jpg;*.jpeg" />
-	<assets path="assets/sounds"  rename="sounds"  include="*.ogg;*.wav" />
-	<assets path="assets/music"   rename="music"   include="*.ogg;*.mp3" />
-	<assets path="assets/fonts"   rename="fonts"   include="*.ttf;*.otf" />
-	<assets path="assets/data"    rename="data"    include="*.json;*.xml;*.txt;*.csv" />
-
+    
 	<!-- Debug flags -->
 	<haxedef name="FLX_NO_MOUSE_ADVANCED" if="desktop" />
 
