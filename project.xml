@@ -12,6 +12,7 @@
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui" />
 
+    <icon path="arts/icon.png" />
     
 	<!-- Debug flags -->
 	<haxedef name="FLX_NO_MOUSE_ADVANCED" if="desktop" />
