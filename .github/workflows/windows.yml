@@ -1,0 +1,49 @@
+name: Windows Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    name: Build (Windows)
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Haxe
+        uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.7
+
+      - name: Cache haxelib
+        uses: actions/cache@v4
+        with:
+          path: C:/HaxeToolkit/haxe/lib
+          key: haxelib-${{ runner.os }}-${{ hashFiles('project.xml') }}
+          restore-keys: haxelib-${{ runner.os }}-
+
+      - name: Install haxelibs
+        run: |
+          haxelib install lime       --quiet
+          haxelib install openfl     --quiet
+          haxelib install flixel     --quiet
+          haxelib install flixel-addons --quiet
+          haxelib install flixel-ui  --quiet
+          haxelib run lime setup
+
+      - name: Build (release)
+        run: haxelib run lime build windows -release
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TADC-Fangame-Windows
+          path: export/windows/bin/
+          if-no-files-found: error
+          retention-days: 30
