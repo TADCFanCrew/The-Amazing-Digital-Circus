@@ -28,13 +28,12 @@ jobs:
           key: haxelib-${{ runner.os }}-${{ hashFiles('project.xml') }}
           restore-keys: haxelib-${{ runner.os }}-
 
-      - name: Install haxelibs
+      - name: Install hmm
+        run: haxelib install hmm --quiet
+
+      - name: Install haxelibs via hmm
         run: |
-          haxelib install lime       --quiet
-          haxelib install openfl     --quiet
-          haxelib install flixel     --quiet
-          haxelib install flixel-addons --quiet
-          haxelib install flixel-ui  --quiet
+          haxelib run hmm install
           haxelib run lime setup
 
       - name: Build (release)
