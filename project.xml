@@ -4,7 +4,11 @@
 	<meta title="The Amazing Digital Circus" package="com.tadc.fangame" version="0.1.0" company="Brenninho" />
 	<app main="Main" path="export" file="TADCFangame" />
 
-	<window width="1280" height="720" background="#000000" fps="60" orientation="landscape" vsync="false" />
+	<!-- Desktop window -->
+	<window width="1280" height="720" background="#000000" fps="60" orientation="landscape" vsync="false" if="desktop" />
+
+	<!-- Mobile: fill native resolution, lock landscape -->
+	<window width="0" height="0" background="#000000" fps="60" orientation="landscape" if="mobile" />
 
 	<source path="source" />
 
@@ -14,14 +18,23 @@
 
     <icon path="arts/icon.png" />
     
+	<!-- Android permissions -->
+	<android permission="VIBRATE"              if="android" />
+	<android permission="INTERNET"             if="android" />
+	<android permission="ACCESS_NETWORK_STATE" if="android" />
+
+	<!-- Android SDK / NDK versions -->
+	<set name="ANDROID_MINIMUM_API_LEVEL" value="21" if="android" />
+	<set name="ANDROID_TARGET_API_LEVEL"  value="34" if="android" />
+
 	<!-- Debug flags -->
 	<haxedef name="FLX_NO_MOUSE_ADVANCED" if="desktop" />
+	<haxedef name="FLX_NO_KEYBOARD"       if="mobile" />
 
 	<!-- Optimisations for release builds -->
 	<haxedef name="FLX_NO_DEBUG" unless="debug" />
-	<haxeflag name="-dce full" unless="debug" />
+	<haxeflag name="-dce full"   unless="debug" />
 
-	<!-- Desktop targets -->
 	<set name="BUILD_DIR" value="export" />
 
 </project>
