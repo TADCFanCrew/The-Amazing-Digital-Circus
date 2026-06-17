@@ -17,16 +17,20 @@ class PlayState extends FlxState
 		label.screenCenter();
 		add(label);
 
+		#if desktop
 		var back = new FlxText(0, FlxG.height - 40, FlxG.width, "Press ESCAPE to return");
 		back.setFormat(null, 16, FlxColor.fromRGB(150, 150, 150), CENTER);
 		add(back);
+		#end
 	}
 
 	override function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
 
+		#if desktop
 		if (FlxG.keys.justPressed.ESCAPE)
 			FlxG.switchState(new MenuState());
+		#end
 	}
 }
