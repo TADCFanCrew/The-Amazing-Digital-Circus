@@ -15,10 +15,12 @@
 	<haxelib name="flixel" />
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui" />
- <haxelib name="hxcpp" />
+	<haxelib name="hxcpp" />
 
-    <icon path="arts/icon.png" />
-    
+	<icon path="arts/icon.png" />
+
+	<assets path="assets/videos" rename="videos" />
+
 	<!-- Android permissions -->
 	<android permission="VIBRATE"              if="android" />
 	<android permission="INTERNET"             if="android" />
