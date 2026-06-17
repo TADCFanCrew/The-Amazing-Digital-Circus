@@ -3,7 +3,9 @@ package;
 import flixel.FlxGame;
 import flixel.FlxG;
 import openfl.display.Sprite;
+import openfl.events.Event;
 import intro.IntroState;
+import audio.master.AudioMaster;
 
 class Main extends Sprite
 {
@@ -17,11 +19,17 @@ class Main extends Sprite
 
 	static inline final FRAMERATE:Int = 60;
 
+	var game:FlxGame;
+
 	public function new()
 	{
 		super();
-		addChild(new FlxGame(GAME_WIDTH, GAME_HEIGHT, IntroState, FRAMERATE, FRAMERATE, true));
+
+		game = new FlxGame(GAME_WIDTH, GAME_HEIGHT, IntroState, FRAMERATE, FRAMERATE, true);
+		addChild(game);
+
 		setupGame();
+		setupAudio();
 	}
 
 	function setupGame():Void
@@ -33,8 +41,6 @@ class Main extends Sprite
 		#end
 
 		FlxG.fixedTimestep = false;
-
-		FlxG.sound.volume = 0.8;
 
 		#if desktop
 		FlxG.sound.muteKeys       = [flixel.input.keyboard.FlxKey.ZERO];
@@ -49,5 +55,49 @@ class Main extends Sprite
 		#if debug
 		FlxG.debugger.drawDebug = true;
 		#end
+	}
+
+	function setupAudio():Void
+	{
+		AudioMaster.init();
+		AudioMaster.setMasterVolume(0.8);
+		AudioMaster.setBusVolume("music",   1.0);
+		AudioMaster.setBusVolume("sfx",     1.0);
+		AudioMaster.setBusVolume("voice",   1.0);
+		AudioMaster.setBusVolume("ambient", 1.0);
+
+		FlxG.signals.preStateSwitch.add(onPreStateSwitch);
+		FlxG.signals.gameResized.add(onGameResized);
+
+		game.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+
+		#if mobile
+		game.stage.addEventListener(Event.ACTIVATE, onAppActivate);
+		game.stage.addEventListener(Event.DEACTIVATE, onAppDeactivate);
+		#end
+	}
+
+	function onEnterFrame(e:Event):Void
+	{
+		AudioMaster.update(1.0 / FRAMERATE);
+	}
+
+	function onPreStateSwitch():Void
+	{
+		AudioMaster.clearQueue();
+	}
+
+	function onGameResized(width:Int, height:Int):Void
+	{
+	}
+
+	function onAppActivate(e:Event):Void
+	{
+		AudioMaster.resumeMusic();
+	}
+
+	function onAppDeactivate(e:Event):Void
+	{
+		AudioMaster.pauseMusic();
 	}
 }
