@@ -35,7 +35,7 @@ This project is a non-commercial fan game inspired by **The Amazing Digital Circ
 |-------------|---------|
 | Haxe        | 4.3.7   |
 | HaxeFlixel  | 5.9.0   |
-| OpenFL      | 9.4.0   |
+| OpenFL      | 9.5.2   |
 | Lime        | 8.3.2   |
 | hxcpp       | 4.3.2   |
 | hxvlc       | 1.8.0   |
