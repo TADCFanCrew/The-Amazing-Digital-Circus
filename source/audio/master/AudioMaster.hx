@@ -1,7 +1,7 @@
 package audio.master;
 
 import flixel.FlxG;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 
@@ -56,6 +56,8 @@ class AudioMaster
 
 		if (FlxG.sound.music != null && FlxG.sound.music.playing)
 		{
+			FlxG.sound.music.autoCalcAmplitude = true;
+
 			var amp = getAmplitude();
 			amplitudeHistory.push(amp);
 			if (amplitudeHistory.length > HISTORY_SIZE)
@@ -80,6 +82,8 @@ class AudioMaster
 		if (FlxG.sound.music != null && FlxG.sound.music.playing)
 			FlxG.sound.music.stop();
 		FlxG.sound.playMusic(backend.Paths.music(key), vol, loop);
+		if (FlxG.sound.music != null)
+			FlxG.sound.music.autoCalcAmplitude = true;
 	}
 
 	public static function stopMusic():Void
@@ -137,15 +141,6 @@ class AudioMaster
 		}
 
 		return FlxG.sound.play(backend.Paths.sound(key), vol);
-	}
-
-	public static function setPitch(sound:FlxSound, pitch:Float):Void
-	{
-		#if (lime >= "8.0.0")
-		@:privateAccess
-		if (sound._channel != null)
-			sound._channel.soundTransform = new openfl.media.SoundTransform(sound.volume, 0);
-		#end
 	}
 
 	public static function setBusVolume(bus:String, volume:Float):Void
@@ -231,11 +226,7 @@ class AudioMaster
 
 	public static function getAmplitude():Float
 	{
-		if (FlxG.sound.music == null) return 0.0;
-		@:privateAccess
-		var left  = FlxG.sound.music._leftChannel  != null ? FlxG.sound.music._leftChannel  : 0.0;
-		var right = FlxG.sound.music._rightChannel != null ? FlxG.sound.music._rightChannel : 0.0;
-		return (left + right) * 0.5;
+		return FlxG.sound.music != null ? FlxG.sound.music.amplitude : 0.0;
 	}
 
 	public static function getAmplitudeHistory():Array<Float>
