@@ -46,11 +46,13 @@ class MenuState extends FlxState
 	{
 		super.update(elapsed);
 
+		#if desktop
 		if (FlxG.keys.justPressed.UP   || FlxG.keys.justPressed.W) updateSelection(-1);
 		if (FlxG.keys.justPressed.DOWN || FlxG.keys.justPressed.S) updateSelection(1);
 
 		if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE || FlxG.keys.justPressed.Z)
 			confirmSelection();
+		#end
 	}
 
 	function updateSelection(change:Int):Void
