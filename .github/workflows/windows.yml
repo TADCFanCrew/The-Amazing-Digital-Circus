@@ -33,7 +33,7 @@ jobs:
 
       - name: Install haxelibs via hmm
         run: |
-          haxelib run hmm install
+          haxelib run hmm install -quiet
           haxelib run lime setup
 
       - name: Build (release)
