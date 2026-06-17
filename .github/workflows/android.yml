@@ -66,6 +66,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: TADC-Fangame-Android
-          path: export/android/bin/app/build/outputs/apk/release/*.apk
+          path: export/android/bin/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
           retention-days: 30
