@@ -36,7 +36,7 @@ jobs:
       - name: Setup Haxe
         uses: krdlab/setup-haxe@v1
         with:
-          haxe-version: 4.3.7
+          haxe-version: 4.3.4
 
       - name: Cache haxelib
         uses: actions/cache@v4
@@ -51,8 +51,12 @@ jobs:
       - name: Install haxelibs via hmm
         run: haxelib run hmm install --quiet
 
+      - name: Force hxcpp 4.3.2
+        run: |
+          haxelib install hxcpp 4.3.2 --quiet
+          haxelib set hxcpp 4.3.2
+
       - name: Setup lime for Android
-        # Feed the three path prompts that "lime setup android" asks interactively.
         run: printf '%s\n' "$ANDROID_SDK_ROOT" "$ANDROID_NDK_HOME" "$JAVA_HOME" | haxelib run lime setup android
 
       - name: Build (release)
