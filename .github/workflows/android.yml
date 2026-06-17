@@ -49,7 +49,7 @@ jobs:
         run: haxelib install hmm --quiet
 
       - name: Install haxelibs via hmm
-        run: haxelib run hmm install
+        run: haxelib run hmm install --quiet
 
       - name: Setup lime for Android
         # Feed the three path prompts that "lime setup android" asks interactively.
