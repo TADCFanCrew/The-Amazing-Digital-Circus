@@ -16,6 +16,7 @@
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui" />
 	<haxelib name="hxcpp" />
+ <haxelib name="hxvlc" />
 
 	<icon path="arts/icon.png" />
 
