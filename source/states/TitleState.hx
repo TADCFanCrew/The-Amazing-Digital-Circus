@@ -34,7 +34,13 @@ class TitleState extends FlxState
 		subtitleText.alpha = 0;
 		add(subtitleText);
 
-		promptText = new FlxText(0, FlxG.height - 60, FlxG.width, "Press ANY KEY to continue");
+		#if mobile
+		var promptMsg = "Tap to continue";
+		#else
+		var promptMsg = "Press ANY KEY to continue";
+		#end
+
+		promptText = new FlxText(0, FlxG.height - 60, FlxG.width, promptMsg);
 		promptText.setFormat(null, 18, FlxColor.fromRGB(180, 180, 180), CENTER);
 		promptText.alpha = 0;
 		add(promptText);
@@ -53,7 +59,14 @@ class TitleState extends FlxState
 	{
 		super.update(elapsed);
 
-		if (canProceed && (FlxG.keys.justPressed.ANY || FlxG.mouse.justPressed))
+		if (!canProceed) return;
+
+		#if mobile
+		if (FlxG.touches.justStarted().length > 0)
 			FlxG.switchState(new MenuState());
+		#else
+		if (FlxG.keys.justPressed.ANY || FlxG.mouse.justPressed)
+			FlxG.switchState(new MenuState());
+		#end
 	}
 }
