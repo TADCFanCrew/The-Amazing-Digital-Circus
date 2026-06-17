@@ -21,7 +21,7 @@ class IntroState extends FlxState
 		add(video);
 
 		video.bitmap.onEndReached.add(onVideoEnd);
-		video.bitmap.onEncounteredError.add(onVideoEnd);
+		video.bitmap.onEncounteredError.add(onVideoError);
 
 		video.bitmap.onFormatSetup.add(onFormatSetup);
 
@@ -64,7 +64,7 @@ class IntroState extends FlxState
 	function skip():Void
 	{
 		video.bitmap.onEndReached.remove(onVideoEnd);
-		video.bitmap.onEncounteredError.remove(onVideoEnd);
+		video.bitmap.onEncounteredError.remove(onVideoError);
 		video.stop();
 		onVideoEnd();
 	}
@@ -76,12 +76,17 @@ class IntroState extends FlxState
 		FlxG.switchState(new TitleState());
 	}
 
+	function onVideoError(message:String):Void
+	{
+		onVideoEnd();
+	}
+
 	override function destroy():Void
 	{
 		if (video != null && video.bitmap != null)
 		{
 			video.bitmap.onEndReached.remove(onVideoEnd);
-			video.bitmap.onEncounteredError.remove(onVideoEnd);
+			video.bitmap.onEncounteredError.remove(onVideoError);
 		}
 		super.destroy();
 	}
