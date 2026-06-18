@@ -17,7 +17,9 @@ class Main extends Sprite
 	static inline final GAME_HEIGHT:Int = 720;
 	#end
 
-	static inline final FRAMERATE:Int = 60;
+	static inline final FRAMERATE:Int   = 60;
+	static inline final SAVE_NAME:String = "tadc_fangame";
+	static inline final SAVE_ID:String   = "com.tadc.fangame";
 
 	var game:FlxGame;
 
@@ -28,8 +30,86 @@ class Main extends Sprite
 		game = new FlxGame(GAME_WIDTH, GAME_HEIGHT, IntroState, FRAMERATE, FRAMERATE, true);
 		addChild(game);
 
+		setupSave();
 		setupGame();
 		setupAudio();
+	}
+
+	function setupSave():Void
+	{
+		FlxG.save.bind(SAVE_NAME, SAVE_ID);
+
+		if (!FlxG.save.data.initialized)
+		{
+			FlxG.save.data.initialized   = true;
+			FlxG.save.data.masterVolume  = 0.8;
+			FlxG.save.data.musicVolume   = 1.0;
+			FlxG.save.data.sfxVolume     = 1.0;
+			FlxG.save.data.voiceVolume   = 1.0;
+			FlxG.save.data.ambientVolume = 1.0;
+			FlxG.save.data.muted         = false;
+			FlxG.save.data.language      = "en-US";
+			FlxG.save.flush();
+		}
+	}
+
+	function loadSaveIntoAudio():Void
+	{
+		AudioMaster.setMasterVolume(getSaveFloat("masterVolume", 0.8));
+		AudioMaster.setBusVolume("music",   getSaveFloat("musicVolume",   1.0));
+		AudioMaster.setBusVolume("sfx",     getSaveFloat("sfxVolume",     1.0));
+		AudioMaster.setBusVolume("voice",   getSaveFloat("voiceVolume",   1.0));
+		AudioMaster.setBusVolume("ambient", getSaveFloat("ambientVolume", 1.0));
+		AudioMaster.setMasterMuted(getSaveBool("muted", false));
+	}
+
+	public static function saveAudioSettings():Void
+	{
+		FlxG.save.data.masterVolume  = AudioMaster.getMasterVolume();
+		FlxG.save.data.musicVolume   = AudioMaster.getBusVolumeRaw("music");
+		FlxG.save.data.sfxVolume     = AudioMaster.getBusVolumeRaw("sfx");
+		FlxG.save.data.voiceVolume   = AudioMaster.getBusVolumeRaw("voice");
+		FlxG.save.data.ambientVolume = AudioMaster.getBusVolumeRaw("ambient");
+		FlxG.save.data.muted         = AudioMaster.isMasterMuted();
+		FlxG.save.flush();
+	}
+
+	public static function getSaveFloat(key:String, fallback:Float):Float
+	{
+		var value:Dynamic = Reflect.field(FlxG.save.data, key);
+		return (value != null) ? cast(value, Float) : fallback;
+	}
+
+	public static function getSaveBool(key:String, fallback:Bool):Bool
+	{
+		var value:Dynamic = Reflect.field(FlxG.save.data, key);
+		return (value != null) ? cast(value, Bool) : fallback;
+	}
+
+	public static function getSaveString(key:String, fallback:String):String
+	{
+		var value:Dynamic = Reflect.field(FlxG.save.data, key);
+		return (value != null) ? cast(value, String) : fallback;
+	}
+
+	public static function setSaveValue(key:String, value:Dynamic):Void
+	{
+		Reflect.setField(FlxG.save.data, key, value);
+		FlxG.save.flush();
+	}
+
+	public static function resetSaveData():Void
+	{
+		FlxG.save.erase();
+		FlxG.save.data.initialized   = true;
+		FlxG.save.data.masterVolume  = 0.8;
+		FlxG.save.data.musicVolume   = 1.0;
+		FlxG.save.data.sfxVolume     = 1.0;
+		FlxG.save.data.voiceVolume   = 1.0;
+		FlxG.save.data.ambientVolume = 1.0;
+		FlxG.save.data.muted         = false;
+		FlxG.save.data.language      = "en-US";
+		FlxG.save.flush();
 	}
 
 	function setupGame():Void
@@ -60,14 +140,9 @@ class Main extends Sprite
 	function setupAudio():Void
 	{
 		AudioMaster.init();
-		AudioMaster.setMasterVolume(0.8);
-		AudioMaster.setBusVolume("music",   1.0);
-		AudioMaster.setBusVolume("sfx",     1.0);
-		AudioMaster.setBusVolume("voice",   1.0);
-		AudioMaster.setBusVolume("ambient", 1.0);
+		loadSaveIntoAudio();
 
 		FlxG.signals.preStateSwitch.add(onPreStateSwitch);
-		FlxG.signals.gameResized.add(onGameResized);
 
 		game.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 
@@ -87,10 +162,6 @@ class Main extends Sprite
 		AudioMaster.clearQueue();
 	}
 
-	function onGameResized(width:Int, height:Int):Void
-	{
-	}
-
 	function onAppActivate(e:Event):Void
 	{
 		AudioMaster.resumeMusic();
@@ -99,5 +170,6 @@ class Main extends Sprite
 	function onAppDeactivate(e:Event):Void
 	{
 		AudioMaster.pauseMusic();
+		saveAudioSettings();
 	}
 }
