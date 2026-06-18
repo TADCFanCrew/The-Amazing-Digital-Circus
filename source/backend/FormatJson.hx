@@ -35,6 +35,7 @@ class FormatJson
 		var len      = text.length;
 		var i        = 0;
 		var inString = false;
+		var inGame   = false;
 		var stringChar = "";
 
 		while (i < len)
