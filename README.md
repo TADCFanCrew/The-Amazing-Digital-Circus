@@ -10,7 +10,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Haxe-4.3.7-orange" alt="Haxe version" />
-  <img src="https://img.shields.io/badge/HaxeFlixel-5.9.0-blue" alt="HaxeFlixel version" />
+  <img src="https://img.shields.io/badge/HaxeFlixel-6.1.2-blue" alt="HaxeFlixel version" />
   <img src="https://img.shields.io/badge/platform-Desktop%20%7C%20Android-lightgrey" alt="Platforms" />
   <img src="https://img.shields.io/badge/license-Apache--2.0-green" alt="License" />
 </p>
@@ -34,7 +34,7 @@ This project is a non-commercial fan game inspired by **The Amazing Digital Circ
 | Component   | Version |
 |-------------|---------|
 | Haxe        | 4.3.7   |
-| HaxeFlixel  | 5.9.0   |
+| HaxeFlixel  | 6.1.2   |
 | OpenFL      | 9.5.2   |
 | Lime        | 8.3.2   |
 | hxcpp       | 4.3.2   |
