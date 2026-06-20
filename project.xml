@@ -20,7 +20,7 @@
 
 	<icon path="arts/icon.png" />
 
-	<assets path="assets/videos" rename="videos" />
+	<assets path="assets" />
 
 	<!-- Android permissions -->
 	<android permission="VIBRATE"              if="android" />
